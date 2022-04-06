@@ -37,7 +37,7 @@ public class ContactRestController {
 		
 		return null;
 	}
-	
+	//delete a contact
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<?> delete(@PathVariable Integer id){
 		ResponseEntity<?> resp=null;
@@ -47,10 +47,12 @@ public class ContactRestController {
 		return resp;
 	}
 	
+	//get a contact 
 	@GetMapping("/get/{id}")
 	public ResponseEntity<?> get(@PathVariable Integer id){
 		return null;
 	}
+	//get all contacts
 	@GetMapping("/all")
 	public ResponseEntity<?> getAll(){
 	

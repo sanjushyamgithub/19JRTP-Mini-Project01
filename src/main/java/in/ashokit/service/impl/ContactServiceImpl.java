@@ -1,6 +1,7 @@
 package in.ashokit.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,33 +18,53 @@ public class ContactServiceImpl implements IContactService {
 	private ContactRepository repo;
 	
 	@Override
-	public Integer saveContact(Contact contact) {
-		// TODO Auto-generated method stub
-		return null;
+	public boolean saveContact(Contact contact) {
+		contact.setActiveSw("y");
+		Contact c = repo.save(contact);
+		
+		if(c.getId()!=null) {
+			return true;
+		}
+		return false;
+		
 	}
 
+	/*
 	@Override
 	public void updateContact(Contact contact) {
 		// TODO Auto-generated method stub
 		
 	}
+	*/
 
 	@Override
-	public void deleteContact(Integer id) {
-		// TODO Auto-generated method stub
+	public boolean deleteContact(Integer id) {
+		Optional<Contact> optional = repo.findById(id);
+		if(optional.isPresent()) {
+			 Contact contact = optional.get();
+			 contact.setActiveSw("n");
+			 repo.save(contact);
+			 return true;
+			 
+		}
+		
+		return false;
 		
 	}
 
 	@Override
 	public Contact getContact(Integer id) {
-		// TODO Auto-generated method stub
+		Optional<Contact> optional = repo.findById(id);
+		if(optional.isPresent()) {
+			return optional.get();
+		}
 		return null;
 	}
 
 	@Override
 	public List<Contact> getAllContacts() {
-		// TODO Auto-generated method stub
-		return null;
+		
+		return repo.findAll();
 	}
 
 	@Override
